@@ -18,8 +18,8 @@ var parseJSON = function(json) {
   };
 
   // next character
-  var next = function(cc) {
-    if (cc && cc !== ch) { // throw error with unexpected character
+  var next = function(nc) {
+    if (nc && nc !== ch) { // throw error with unexpected character
       throw new SyntaxError();
     }
     ch = json.charAt(idx);
