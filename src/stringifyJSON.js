@@ -10,19 +10,24 @@ var stringifyJSON = function(obj) {
     return "null";
   }
 
-  // undefined and functions
-  if (obj === undefined || obj.constructor === Function) { 
+  // undefined
+  if (obj === undefined) { 
     return "undefined"; 
+  }
+
+  // functions (can also be considered undefined)
+  if (obj.constructor === Function) {
+    return obj + ""; // functions cannot be stringified, but we can stringify the function expression
   }
 
   // numbers and booleans
   if (obj.constructor === Number || obj.constructor === Boolean) {
-    return obj.toString();
+    return obj + ""; // adding empty string stringifies numbers and booleans
   }
 
   // strings
   if (obj.constructor === String) {
-    return '"' + obj + '"';
+    return '"' + obj + '"'; // adding quotes
   }
 
   // arrays
@@ -46,11 +51,11 @@ var stringifyJSON = function(obj) {
       var stringified = "";
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        if (key && obj[key] !== undefined && typeof key !== 'function' && typeof obj[key] !== 'function') {
-          if (i < keys.length - 1) {
+        if (key && obj[key] !== undefined && typeof key !== "function" && typeof obj[key] !== "function") {
+          if (i < keys.length - 1) { // if not last key/value, add comma
             stringified += stringifyJSON(key) + ":" + stringifyJSON(obj[key]) + ",";
           } 
-          else {
+          else { // last key/value, don't add comma
             stringified += stringifyJSON(key) + ":" + stringifyJSON(obj[key]);
           }
         }
@@ -61,4 +66,7 @@ var stringifyJSON = function(obj) {
       return "{}"; 
     }
   }
+
+  // if input is none of the datatypes listed above, throw error
+  throw new SyntaxError("unexpected input"); 
 };
