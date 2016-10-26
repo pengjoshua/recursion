@@ -35,9 +35,9 @@ var stringifyJSON = function(obj) {
     if (obj.length) { // not an empty array
       var stringified = [];
       for (var i = 0; i < obj.length; i++) {
-        stringified.push(stringifyJSON(obj[i]));
+        stringified.push(stringifyJSON(obj[i])); // push stringified contents into a new array
       }
-      return "[" + stringified.join(",") + "]";
+      return "[" + stringified.join(",") + "]"; // use join to convert new array to string
     } 
     else { // empty array
       return "[]";
@@ -51,7 +51,7 @@ var stringifyJSON = function(obj) {
       var stringified = "";
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        if (key && obj[key] !== undefined && typeof key !== "function" && typeof obj[key] !== "function") {
+        if (key && obj[key] !== undefined && typeof key !== "function" && typeof obj[key] !== "function") { // if key exists and key and value are both not a function
           if (i < keys.length - 1) { // if not last key/value, add comma
             stringified += stringifyJSON(key) + ":" + stringifyJSON(obj[key]) + ",";
           } 

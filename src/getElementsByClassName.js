@@ -8,11 +8,9 @@ var getElementsByClassName = function(className) {
   // your code here
   var matches = []; // initialize matching elements array
   function checkForMatches(node) {
-  	if (node.classList) {
-      if (node.classList.contains(className)) {
-        matches.push(node); // add node to matches array node's classList contains className
-      }
-  	}
+    if (node.classList && node.classList.contains(className)) { // if classList exists and contains className
+      matches.push(node); // add node to matches array
+    }
     for (var i = 0; i < node.childNodes.length; i++) {
       checkForMatches(node.childNodes[i]); // recursively check for matches for each child node
     }
